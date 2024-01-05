@@ -62,7 +62,7 @@ function createGeoJSON(rowsData) {
         properties: {
           id: row.id,
           name: 'Bridge',
-          description: 'test description'
+          description: row.description
           // Add other properties as needed
         },
         geometry: {

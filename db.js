@@ -25,7 +25,8 @@ function connectToDatabase() {
     ( 
       id INT,
       latitude   REAL,
-      longitude  REAL
+      longitude  REAL,
+      description TEXT
     )
   `);
   }

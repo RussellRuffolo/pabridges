@@ -8,8 +8,8 @@ fs.createReadStream("./PA22.csv")
   .on("data", function (row) {
     db.serialize(function () {
       db.run(
-        `INSERT INTO bridges VALUES (?, ? , ?)`,
-        [row[1], insertDecimal(row[19]), -insertDecimal(row[20])],
+        `INSERT INTO bridges VALUES (?, ? , ?, ?)`,
+        [row[1], insertDecimal(row[19]), -insertDecimal(row[20]), "Road: " + row[12] + "\nCrosses: " + row[10] + "\nLocation: " + row[13]],
         function (error) {
           if (error) {
             return console.log(error.message);
