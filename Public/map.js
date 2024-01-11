@@ -10,14 +10,13 @@ const map = new mapboxgl.Map({
 map.on('load', async() => {
 
     var geoJson = await fetchGeoJSON();
-    console.log(geoJson);
     // Add an image to use as a custom marker
     map.loadImage(
     'http://localhost:3000/custom_marker.png',
     (error, image) => {
     if (error) throw error;
     map.addImage('custom-marker', image);
-    
+    console.log(geoJson);
     map.addSource('points', {
     type: 'geojson',
     data: geoJson
@@ -78,7 +77,7 @@ map.on('load', async() => {
 
     async function fetchGeoJSON() {
         try {
-          const response =  await fetch('http://localhost:3001/geojsonbridges'); // Replace with your actual GeoJSON endpoint
+          const response =  await fetch('http://localhost:3001/geojsonbridges'); 
           if (!response.ok) {
           
             throw new Error('Network response was not ok.');
@@ -90,3 +89,50 @@ map.on('load', async() => {
           return null;
         }
       }
+
+      const slider = document.getElementById("slider");
+      const sliderValueDisplay = document.getElementById("sliderValue");
+  
+      // Function to handle slider value change
+      function handleSliderChange() {
+        const sliderValue = slider.value;
+        sliderValueDisplay.textContent = `Bridges serviced since: ${sliderValue}`;
+        updateMap(sliderValue);
+ 
+      }
+
+      async function updateMap(date){
+        var filteredGeoJSON = await fetchByDate(date);
+        console.log(filteredGeoJSON);
+        map.getSource("points").setData(filteredGeoJSON);
+      }
+
+      async function fetchByDate(date){
+
+        var dateString = String(date);
+        console.log(dateString);
+        var postData = {
+          date: dateString
+        };
+
+
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',       
+          },
+          body: JSON.stringify(postData),
+        };
+
+       const response = await fetch("http://localhost:3001/inspection", requestOptions);
+       if (!response.ok) {
+          
+        throw new Error('Network response was not ok.');
+      }
+      const geoJSONData =  response.json();
+      return geoJSONData;
+
+      }
+  
+      // Attach event listener for slider input change
+      slider.addEventListener("input", handleSliderChange);

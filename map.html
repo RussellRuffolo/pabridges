@@ -19,6 +19,15 @@
         bottom: 0;
         width: 100%;
       }
+
+      .slider-container {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        text-align: center;
+      }
     </style>
 </head>
 <body>
@@ -29,6 +38,10 @@
     }
     </style>
 <div id='map'></div>
+<div class="slider-container">
+  <input type="date" min="2018-04-01" max="2024-01-01" value="2018-04-01" id="slider">
+  <div id="sliderValue">Bridges serviced since: 2018-04-01</div>
+</div>
 <script src="/map.js"></script>
 </body>
 </html>

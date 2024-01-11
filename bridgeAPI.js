@@ -54,6 +54,27 @@ app.get("/status", (request, response) => {
     });
  });
 
+ app.post("/inspection", (request, response) =>{
+
+  
+  
+  const sql = 'SELECT * FROM bridges WHERE julianday(inspection_date) >= julianday(\''+request.body.date+'\')';
+  console.log(sql);
+
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+
+    const result = createGeoJSON(rows)
+
+
+    response.send(result);
+  });
+
+ })
+
  // Function to create GeoJSON object
 function createGeoJSON(rowsData) {
     const features = rowsData.map(row => {

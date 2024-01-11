@@ -8,16 +8,42 @@ fs.createReadStream("./PA22.csv")
   .on("data", function (row) {
     db.serialize(function () {
       db.run(
-        `INSERT INTO bridges VALUES (?, ? , ?, ?)`,
-        [row[1], parseLatitude(row[19]), -parseLongitude(row[20]), "Road: " + row[12] + "\nCrosses: " + row[10] + "\nLocation: " + row[13]],
+        `INSERT INTO bridges VALUES (?, ? , ?, ?, ?)`,
+        [row[1], parseLatitude(row[19]), -parseLongitude(row[20]), convertDate(row[84]), "Road: " + row[12] + "\nCrosses: " + row[10] + "\nLocation: " + row[13]],
         function (error) {
           if (error) {
             return console.log(error.message);
           }        
         }
       );
+
+     
+      db.run('CREATE INDEX IF NOT EXISTS idx_inspection_date ON bridges (inspection_date)');
+     
     });
   });
+
+  function convertDate(dateValue){
+    var dateString = String(dateValue);
+
+    var month;
+    var year;
+    if(dateString.length == 3){
+       month = dateString.slice(0,1);
+       month = "0"+month;
+       year = dateString.slice(1);
+    }
+    else{
+      month = dateString.slice(0,2);
+      year = dateString.slice(2);
+    }
+
+
+
+
+    return "20"+year+"-"+month+"-01"
+
+  }
 
   function parseLatitude(latValue){
     var latString = String(latValue);
