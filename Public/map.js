@@ -68,7 +68,7 @@ map.on('load', async() => {
 
 
     function GetData(){
-        fetch('https://pabridges.net/api/geojsonbridges').then(response => {
+        fetch('https://pabridges.net/geojsonbridges').then(response => {
             var geoJSON = response.json();
            
             
@@ -77,7 +77,7 @@ map.on('load', async() => {
 
     async function fetchGeoJSON() {
         try {
-          const response =  await fetch('https://pabridges.net/api/geojsonbridges'); 
+          const response =  await fetch('https://pabridges.net/geojsonbridges'); 
           if (!response.ok) {
           
             throw new Error('Network response was not ok.');
@@ -124,7 +124,7 @@ map.on('load', async() => {
           body: JSON.stringify(postData),
         };
 
-       const response = await fetch("https://pabridges.net/api/inspection", requestOptions);
+       const response = await fetch("https://pabridges.net/inspection", requestOptions);
        if (!response.ok) {
           
         throw new Error('Network response was not ok.');
