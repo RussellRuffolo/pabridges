@@ -5,7 +5,7 @@ const app = express ();
 
 app.use(express.json());
 app.use(cors());
-const PORT = 3001;
+const PORT = 3551;
 
 let db = new sqlite3.Database('./bridges.db');
 
