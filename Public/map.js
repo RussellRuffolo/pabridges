@@ -12,7 +12,7 @@ map.on('load', async() => {
     var geoJson = await fetchGeoJSON();
     // Add an image to use as a custom marker
     map.loadImage(
-    'http://localhost:3000/custom_marker.png',
+    'https://pabridges.net/custom_marker.png',
     (error, image) => {
     if (error) throw error;
     map.addImage('custom-marker', image);
@@ -68,7 +68,7 @@ map.on('load', async() => {
 
 
     function GetData(){
-        fetch('http://localhost:3001/geojsonbridges').then(response => {
+        fetch('http://pabridges.net/api/geojsonbridges').then(response => {
             var geoJSON = response.json();
            
             
@@ -77,7 +77,7 @@ map.on('load', async() => {
 
     async function fetchGeoJSON() {
         try {
-          const response =  await fetch('http://localhost:3001/geojsonbridges'); 
+          const response =  await fetch('http://pabridges.net/api/geojsonbridges'); 
           if (!response.ok) {
           
             throw new Error('Network response was not ok.');
@@ -124,7 +124,7 @@ map.on('load', async() => {
           body: JSON.stringify(postData),
         };
 
-       const response = await fetch("http://localhost:3001/inspection", requestOptions);
+       const response = await fetch("http://pabridges.net/api/inspection", requestOptions);
        if (!response.ok) {
           
         throw new Error('Network response was not ok.');
